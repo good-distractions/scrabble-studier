@@ -1,0 +1,12 @@
+starting form
+--------------
+get file name
+get filter
+get time between words
+
+
+function
+--------
+run list until exit or pause
+if exit, return to start page
+if pause, hold word position & add resume button

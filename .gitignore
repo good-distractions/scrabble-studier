@@ -1,0 +1,6 @@
+db.sqlite3
+.env
+.DS_Store
+collected-media
+collected-static
+images
