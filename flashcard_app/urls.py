@@ -5,5 +5,9 @@ app_name = 'flashcard_app'
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
-    path('upload/', views.UploadView.as_view(), name='upload')
+    path('dictionary/<int:pk>', views.DictionaryDetailView.as_view(), name='dictionary'),
+    path('dictionaries/', views.DictionaryListView.as_view(), name='dictionaries'),
+    path('add_dictionary/', views.DictionaryCreateView.as_view(),
+         name='add_dictionary'),
+    path('delete_dictionary/<int:pk>', views.DictionaryDeleteView.as_view(), name='delete_dictionary'),
 ]
