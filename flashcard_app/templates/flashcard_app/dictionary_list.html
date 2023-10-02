@@ -3,7 +3,7 @@
 <div>
   {% for dictionary in dictionary_list %}
   <div>
-      <h1>{{dictionary.title}}</h1>
+    <a href="/dictionary/{{dictionary.id}}" >{{dictionary.title}}</a>
   </div>
   {% endfor%}
 </div>
