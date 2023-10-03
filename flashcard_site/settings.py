@@ -74,6 +74,10 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 WSGI_APPLICATION = 'flashcard_site.wsgi.application'
 
 
