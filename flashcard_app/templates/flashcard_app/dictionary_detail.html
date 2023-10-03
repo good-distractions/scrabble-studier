@@ -7,11 +7,12 @@
   <h1>Preview</h1>
   <table id="dictionary_preview" class="table table-bordered dt-responsive nowrap w-100">
     <thead>
-     {{ data | convert_data_frame_to_html_table_headers | safe}}
+     {{ preview_data | convert_data_frame_to_html_table_headers | safe}}
     </thead>
     <tbody>
-      {{data | convert_data_frame_to_html_table_rows | safe}}
+      {{ preview_data | convert_data_frame_to_html_table_rows | safe}}
     </tbody>
    </table>
+   <a href="/dictionary/learn/{{dictionary.id}}" >Study dictionary</a>
 </div>
 {%endblock%}
