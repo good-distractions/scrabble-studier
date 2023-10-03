@@ -6,5 +6,8 @@
   <h1>{{dictionary.source}}</h1>
   <div id="flashcards"></div>
   <script src="{% static 'flashcard_app/script.js' %}"></script>
+  <script type='text/javascript'>
+    var wordList = {{ my_data|safe }};
+    </script>
 </div>
 {%endblock%}

@@ -2,8 +2,11 @@ var flashcardEl = document.getElementById("flashcards");
 var mainEl = document.createElement("main");
 var mainTitleEl = document.createElement("h1");
 mainTitleEl.id = "main-title";
-var wordList;
+// var wordList = JSON.parse({{my_data|safe}});
 var timeBetween = 2;
+
+
+
 
 // initialize page function
 var initializePage = function () {
@@ -37,7 +40,7 @@ var initializePage = function () {
 
 // load cards function
 var generateWordArray = function (){
-    wordList.push('hello','world','goodbye','again')
+    // wordList.push('hello','world','goodbye','again')
 }
 
 // start cards function

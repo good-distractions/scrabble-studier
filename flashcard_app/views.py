@@ -5,6 +5,7 @@ from urllib import request
 from flashcard_app import models
 import pandas as pd
 from django.utils.html import format_html
+import json
 
 
 class HomeView(TemplateView):
@@ -63,7 +64,8 @@ class DictionaryStudyView(TemplateView):
         dictionary = models.Dictionary.objects.get(pk=primary_key)
         context['dictionary'] = dictionary
         data = pd.read_csv(dictionary.file, header=None)
-        data = data.iloc[:, 0].head(10)
-        print(data)
-        print(context)
+        data = data.iloc[:, 0].head(10).values.tolist()
+        context['my_data'] = json.dumps(data)
+        print(context['my_data'])
+        # print(context)
         return context
