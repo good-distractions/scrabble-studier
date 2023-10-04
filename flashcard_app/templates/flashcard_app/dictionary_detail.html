@@ -13,6 +13,20 @@
       {{ preview_data | convert_data_frame_to_html_table_rows | safe}}
     </tbody>
    </table>
-   <a href="/dictionary/learn/{{dictionary.id}}" >Study dictionary</a>
+   <ul>
+    <a>
+      <a href="/dictionary/learn/{{dictionary.id}}" >Entire List</a>
+      <a href="/dictionary/learn/q_no_u/{{dictionary.id}}" >Words with Q and not with U</a>
+      <a href="/dictionary/learn/palindrome/{{dictionary.id}}" >Palindromes</a>
+      <a href="/dictionary/learn/novowels/{{dictionary.id}}" >Words without vowels</a>
+      <a href="/dictionary/learn/7l5v/{{dictionary.id}}" >7 letter words with 5 or more vowels</a>
+      <a href="/dictionary/learn/5l4v/{{dictionary.id}}" >5 letter words with 4 vowels</a>
+      <a href="/dictionary/learn/satine/{{dictionary.id}}" >7 letter words containing S-A-T-I-N-E</a>
+      <a href="/dictionary/learn/endinz/{{dictionary.id}}" >Words that end in Z</a>
+      <a href="/dictionary/learn/xlcontainz/{{dictionary.id}}" >X letter Words that contain Z</a>
+      <a href="/dictionary/learn/xlw/{{dictionary.id}}" >X Letter words</a>
+      <a href="/dictionary/learn/xyz/{{dictionary.id}}" >Words that contain XYZ</a>
+    </a>
+   </ul>
 </div>
 {%endblock%}

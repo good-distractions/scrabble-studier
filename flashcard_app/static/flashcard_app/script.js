@@ -4,11 +4,14 @@ var mainTitleEl = document.createElement("h1");
 mainTitleEl.id = "main-title";
 var timeBetween = 2;
 var isPaused = false;
-var endCards = false;
+var endCards = true;
 var wordNum = 0;
 
 // initialize page function
 var initializePage = function () {
+  isPaused = false;
+  endCards = true;
+  wordNum = 0;
   // reset word array and word num
   // wordList = [];
   // wordNum = 0;
@@ -38,6 +41,7 @@ var initializePage = function () {
 // start cards function
 
 var startFlashcardsHandler = function () {
+  endCards = false;
   // remove instructions text & start flashcards button
   document.querySelector("#instructions").remove();
   document.querySelector("#start-flashcards").remove();
@@ -46,11 +50,11 @@ var startFlashcardsHandler = function () {
   pauseFlashcardsEl.textContent = "Pause";
   pauseFlashcardsEl.addEventListener("click", pauseFlashcardsHandler);
   mainEl.append(pauseFlashcardsEl);
-  var endFlashcardsEl = document.createElement("button");
-  endFlashcardsEl.id = "end-flashcards";
-  endFlashcardsEl.textContent = "End";
-  endFlashcardsEl.addEventListener("click", endFlashcardsHandler);
-  mainEl.append(endFlashcardsEl);
+  // var endFlashcardsEl = document.createElement("button");
+  // endFlashcardsEl.id = "end-flashcards";
+  // endFlashcardsEl.textContent = "End";
+  // endFlashcardsEl.addEventListener("click", endFlashcardsHandler);
+  // mainEl.append(endFlashcardsEl);
   // call display first word
   displayWords();
 };
@@ -65,15 +69,21 @@ function intervalLoop(millisec) {
 }
 
 async function displayWords() {
-  for (
-    var i = wordNum;
-    (i < wordList.length) & (isPaused != true) & (endCards != true);
-    i++
-  ) {
+  for (var i = wordNum; (i < wordList.length) & !isPaused & !endCards; i++) {
+    await intervalLoop(timeBetween * 1000);
     var currentWord = wordList[i];
     mainTitleEl.textContent = currentWord;
-    await intervalLoop(timeBetween * 1000);
     wordNum++;
+  }
+  if (document.querySelector("#pause-flashcards")) {
+    document.querySelector("#pause-flashcards").remove();
+  }
+
+  if (document.querySelector("#end-flashcards")) {
+    document.querySelector("#end-flashcards").remove();
+  }
+  if (wordNum == wordList.length) {
+    initializePage();
   }
 }
 
@@ -101,6 +111,7 @@ var resumeFlashcardsHandler = function () {
 };
 
 // end cards function
+// update to redirect to dictionary page
 var endFlashcardsHandler = function () {
   endCards = true;
   if (document.querySelector("#pause-flashcards")) {
@@ -109,7 +120,10 @@ var endFlashcardsHandler = function () {
   if (document.querySelector("#resume-flashcards")) {
     document.querySelector("#resume-flashcards").remove();
   }
-  document.querySelector("#end-flashcards").remove();
+  if (document.querySelector("#end-flashcards")) {
+    document.querySelector("#end-flashcards").remove();
+  }
+
   initializePage();
 };
 
