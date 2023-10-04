@@ -7,6 +7,7 @@ import pandas as pd
 from django.utils.html import format_html
 import json
 from django.http import HttpResponse
+from forms import CustomFilterForm
 
 
 class HomeView(TemplateView):
@@ -32,12 +33,13 @@ class DictionaryDeleteView(DeleteView):
     success_url = reverse_lazy('portfolio_app:dictionaries')
 
 
-class DictionaryDetailView(DetailView):
+class DictionaryDetailView(DetailView,FormMixin):
     model = models.Dictionary
     fields = '__all__'
-
+    
     def get_context_data(self, **kwargs):
         context = super(DictionaryDetailView, self).get_context_data(**kwargs)
+        context['filter_form'] = CustomFilterForm
         self.object = self.get_object()
         data = pd.read_csv(self.object.file, header=None)
         # print(data)
