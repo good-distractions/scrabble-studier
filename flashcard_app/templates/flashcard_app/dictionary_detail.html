@@ -13,7 +13,7 @@
       {{ preview_data | convert_data_frame_to_html_table_rows | safe}}
     </tbody>
    </table>
-   <ul>
+   <!-- <ul>
     <a>
       <a href="/dictionary/learn/{{dictionary.id}}" >Entire List</a>
       <a href="/dictionary/learn/q_no_u/{{dictionary.id}}" >Words with Q and not with U</a>
@@ -27,6 +27,12 @@
       <a href="/dictionary/learn/xlw/{{dictionary.id}}" >X Letter words</a>
       <a href="/dictionary/learn/xyz/{{dictionary.id}}" >Words that contain XYZ</a>
     </a>
-   </ul>
+   </ul> -->
+    <form method="POST"" class=""></form>
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="filterForm">
+    {{ filter_form.as_p }}
+   <button type="submit" class="save btn btn-default" name="form">Add Filter Parameters</button>
+</form>
 </div>
 {%endblock%}

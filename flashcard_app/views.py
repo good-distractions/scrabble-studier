@@ -1,13 +1,14 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView
-from django.urls import reverse, reverse_lazy
-from urllib import request
-from flashcard_app import models
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormMixin
+from . import models
 import pandas as pd
 from django.utils.html import format_html
 import json
-from django.http import HttpResponse
-from forms import CustomFilterForm
+from .forms import CustomFilterForm
+from urllib.parse import urlencode
 
 
 class HomeView(TemplateView):
@@ -17,29 +18,34 @@ class HomeView(TemplateView):
 class DictionaryCreateView(CreateView):
     model = models.Dictionary
     fields = '__all__'
-    success_url = reverse_lazy('portfolio_app:dictionaries')
+    success_url = reverse_lazy('flashcard_app:dictionaries')
 
 
 class DictionaryUpdateView(UpdateView):
     model = models.Dictionary
     fields = '__all__'
     # change to take you to dictionary detail
-    success_url = reverse_lazy('portfolio_app:dictionaries')
+    success_url = reverse_lazy('flashcard_app:dictionaries')
 
 
 class DictionaryDeleteView(DeleteView):
     model = models.Dictionary
     fields = '__all__'
-    success_url = reverse_lazy('portfolio_app:dictionaries')
+    success_url = reverse_lazy('flashcard_app:dictionaries')
 
-
-class DictionaryDetailView(DetailView,FormMixin):
+class DictionaryListView(ListView):
     model = models.Dictionary
     fields = '__all__'
+    context_object_name = 'dictionary_list'
+
+class DictionaryDetailView(DetailView, FormMixin):
+    model = models.Dictionary
+    fields = '__all__'
+    form_class = CustomFilterForm
     
     def get_context_data(self, **kwargs):
         context = super(DictionaryDetailView, self).get_context_data(**kwargs)
-        context['filter_form'] = CustomFilterForm
+        context['filter_form'] = CustomFilterForm(initial = {'post':self.object})
         self.object = self.get_object()
         data = pd.read_csv(self.object.file, header=None)
         # print(data)
@@ -49,12 +55,41 @@ class DictionaryDetailView(DetailView,FormMixin):
         # print(data)
         context['preview_data'] = data
         return context
+    
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         return self.form_valid(form.cleaned_data)
+    #     else:
+    #         return self.form_invalid(form)
 
-
-class DictionaryListView(ListView):
-    model = models.Dictionary
-    fields = '__all__'
-    context_object_name = 'dictionary_list'
+    # def form_valid(self, form):
+    #     self.form = form
+    #     return super(DictionaryDetailView, self).form_valid(form)
+    
+    # def form_valid(self, form):
+    #     context = self.get_context_data(form=form)
+    #     # print(context)
+    #     return self.render_to_response(context=context)
+    
+    # def get_success_url(self, **kwargs):
+    #     context = super(DictionaryDetailView,self).get_context_data(**kwargs)
+    #     form_data = self.form
+    #     # print(form_data['filter_type'])
+    #     context['form_data'] = form_data
+    #     primary_key = context['dictionary'].pk
+    #     # return reverse_lazy('flashcard_app:study_dictionary',args=[primary_key])
+    #     # return reverse_lazy('flashcard_app:study_dictionary',
+    #     #                     args = [self.object.pk,
+    #     #                             form_data['filter_type'],
+    #     #                             form_data['substring'],
+    #     #                             form_data['word_length']])
+    #     return reverse_lazy('flashcard_app:study_dictionary',
+    #                 kwargs = {'pk':self.object.pk,
+    #                     'filter_type':form_data['filter_type'],
+    #                     'word_length':form_data['word_length'],
+    #                     'substring':form_data['substring']})
 
 
 class DictionaryStudyAllView(TemplateView):
