@@ -11,3 +11,4 @@ dj_database_url
 psycopg
 django-storages
 boto3
+pandas
