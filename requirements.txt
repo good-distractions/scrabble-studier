@@ -1,0 +1,13 @@
+django
+python-dotenv
+Pillow
+gunicorn
+whitenoise
+pyyaml 
+ua-parser 
+# user-agents
+# django-user-agents
+dj_database_url
+psycopg
+django-storages
+boto3
