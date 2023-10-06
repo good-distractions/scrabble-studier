@@ -12,3 +12,5 @@ psycopg
 django-storages
 boto3
 pandas
+psycopg; sys_platform == "linux"
+psycopg[binary]; sys_platform != "linux"
