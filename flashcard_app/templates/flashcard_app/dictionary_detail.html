@@ -5,14 +5,7 @@
   <h1>{{dictionary.title}}</h1>
   <h1>{{dictionary.source}}</h1>
   <h1>Preview</h1>
-  <table id="dictionary_preview" class="table table-bordered dt-responsive nowrap w-100">
-    <thead>
-     {{ preview_data | convert_data_frame_to_html_table_headers | safe}}
-    </thead>
-    <tbody>
-      {{ preview_data | convert_data_frame_to_html_table_rows | safe}}
-    </tbody>
-   </table>
+
    <ul>
     <a>
       <a href="/dictionary/learn/{{dictionary.id}}" >Entire List</a>
@@ -28,5 +21,11 @@
       <a href="/dictionary/learn/xyz/{{dictionary.id}}" >Words that contain XYZ</a>
     </a>
    </ul>
+   <form method="POST" action="{% url 'flashcard_app:dictionary' dictionary.pk %}" class="">
+   {% csrf_token %}
+   <input type="hidden" name="form_type" value="filterForm">
+   {{ form.as_p }}
+  <button type="submit" class="save btn btn-default" name="form">Study</button>
+</form>
 </div>
 {%endblock%}
