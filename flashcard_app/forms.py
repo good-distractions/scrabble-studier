@@ -23,7 +23,6 @@ class CustomFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CustomFilterForm, self).__init__(*args, **kwargs)
         self.fields['substring'].required = False
-        self.fields['word_length'].required = False
     
     def load_data(self):
         # do something with self.cleaned_data
