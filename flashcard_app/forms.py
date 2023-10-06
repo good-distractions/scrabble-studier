@@ -10,9 +10,6 @@ FILTER_CHOICES = [
     ("5l4v","5 letter words with 4 vowels"),
     ("satine","7 letter words containing s-a-t-i-n-e"),
     ("endinz","End in Z"),
-    ("length","Filter by Length Only"),
-    ("xlcontainy","Filter by Character & Length"),
-    ("contain_xyz","Filter by Character Only"),
 ]
 
 class CustomFilterForm(forms.Form):

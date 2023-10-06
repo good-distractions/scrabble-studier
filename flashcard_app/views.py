@@ -118,7 +118,6 @@ class DictionaryStudyAllView(TemplateView):
         data = pd.read_csv(dictionary.file, header=None)
         data = data.iloc[:, 0]
         print(filter_vals)
-        print(filter_vals['filter_type']== 'palindrome')
         # print(self.request.POST) 
         if filter_vals['filter_type']== 'all':
             pass
@@ -133,29 +132,27 @@ class DictionaryStudyAllView(TemplateView):
             data = data.iloc[:, 0]
         elif filter_vals['filter_type']== '7l5v':
             data = data[data.str.len() == 7]
-            data = data[data.str.count(r'[aeiou]') == 5]
+            data = data[data.str.count(r'[aeiouAEIOU]') == 5]
         elif filter_vals['filter_type']== '5l4v':
             data = data[data.str.len() == 5]
-            data = data[data.str.count(r'[aeiou]') == 4]
+            data = data[data.str.count(r'[aeiouAEIOU]') == 4]
         elif filter_vals['filter_type']== 'satine':
             data = data[data.str.len() == 7]
             data = data[data.str.contains('s', case=False, na=False)]
-            data = data[~data.str.contains('a', case=False, na=False)]
-            data = data[~data.str.contains('t', case=False, na=False)]
-            data = data[~data.str.contains('i', case=False, na=False)]
-            data = data[~data.str.contains('n', case=False, na=False)]
-            data = data[~data.str.contains('e', case=False, na=False)]
+            data = data[data.str.contains('a', case=False, na=False)]
+            data = data[data.str.contains('t', case=False, na=False)]
+            data = data[data.str.contains('i', case=False, na=False)]
+            data = data[data.str.contains('n', case=False, na=False)]
+            data = data[data.str.contains('e', case=False, na=False)]
         elif filter_vals['filter_type']== 'endinz':
-            data = data[data.str.endswith('z', case=False, na=False)]
-        elif filter_vals['filter_type']== 'length':
-            data = data[data.str.len() == 3]
-        elif filter_vals['filter_type']== 'xlcontainy':
-            data = data[data.str.len() == 3]
-            data = data[data.str.contains('z', case=False, na=False)]
-        elif filter_vals['filter_type']== 'contain_xyz':
-            data = data[data.str.contains('xy', case=False, na=False)]
-        elif filter_vals['filter_type']== 'novowels':
-            data = data[data.str.count(r'[aeiou]') == 0]
+            data = data[data.str.endswith('z')|data.str.endswith('Z')]
+        elif filter_vals['filter_type']== 'no_vowels':
+            print('no_vowels')
+            data = data[data.str.count(r'[aeiouAEIOU]') == 0]
+        if filter_vals['word_length'] !='':
+            data = data[data.str.len() == int(filter_vals['word_length'])]
+        if filter_vals['substring'] != '':
+            data = data[data.str.contains(filter_vals['substring'], case=False, na=False)]
         print(data.head(10))
         data = data.values.tolist()
         context['my_data'] = json.dumps(data)
