@@ -4,15 +4,15 @@ from django import forms
 FILTER_CHOICES = [
     ("all", "All Words"),
     ("q_no_u", "With Q not U"),
-    # ("palindrome","Palindromes"),
-    # ("no_vowels","Words without Vowels"),
-    # ("7l5v","7 letter words with 5 or more vowels"),
-    # ("5l4v","5 letter words with 4 vowels"),
-    # ("satine","7 letter words containing s-a-t-i-n-e"),
-    # ("endinz","End in Z"),
-    # ("length","Filter by Length Only"),
-    # ("xlcontainy","Filter by Character & Length"),
-    # ("contain_xyz","Filter by Character Only"),
+    ("palindrome","Palindromes"),
+    ("no_vowels","Words without Vowels"),
+    ("7l5v","7 letter words with 5 or more vowels"),
+    ("5l4v","5 letter words with 4 vowels"),
+    ("satine","7 letter words containing s-a-t-i-n-e"),
+    ("endinz","End in Z"),
+    ("length","Filter by Length Only"),
+    ("xlcontainy","Filter by Character & Length"),
+    ("contain_xyz","Filter by Character Only"),
 ]
 
 class CustomFilterForm(forms.Form):
@@ -23,6 +23,8 @@ class CustomFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(CustomFilterForm, self).__init__(*args, **kwargs)
         self.fields['substring'].required = False
+        self.fields['word_length'].required = False
+        self.fields['filter_type'].required = True
     
     def load_data(self):
         # do something with self.cleaned_data
