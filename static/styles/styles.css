@@ -1,28 +1,28 @@
 @font-face {
   font-family: Interstate;
   font-weight: normal;
-  src: url("./fonts/interstate-2-cdnfonts/InterstateBlack.otf")
+  src: url("..static/fonts/interstate-2-cdnfonts/InterstateBlack.otf")
     format("opentype");
 }
 
 @font-face {
   font-family: Interstate;
   font-weight: bold;
-  src: url("./fonts/interstate-2-cdnfonts/InterstateBold.otf")
+  src: url("..static/fonts/interstate-2-cdnfonts/InterstateBold.otf")
     format("opentype");
 }
 
 @font-face {
     font-family: Interstate;
     font-weight: lighter;
-    src: url("./fonts/interstate-2-cdnfonts/InterstateExtraLight.otf")
+    src: url("..static/fonts/interstate-2-cdnfonts/InterstateExtraLight.otf")
       format("opentype");
   }
 
   @font-face {
     font-family: Interstate;
     font-weight: light;
-    src: url("./fonts/interstate-2-cdnfonts/InterstateLight.otf")
+    src: url("..static/fonts/interstate-2-cdnfonts/InterstateLight.otf")
       format("opentype");
   }
 
