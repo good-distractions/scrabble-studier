@@ -158,7 +158,7 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 # STATIC_URL = AWS_URL + '/static/'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATIC_URL = 'static/'
+STATIC_URL = os.getenv('STATIC_URL')
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     "/var/www/static/",
