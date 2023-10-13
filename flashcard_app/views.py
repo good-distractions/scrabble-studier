@@ -49,7 +49,12 @@ class DictionaryDetailView(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(DictionaryDetailView, self).get_context_data(**kwargs)
         context['form'] = CustomFilterForm()
-        # print('context')
+        data = pd.read_csv(self.object.file, header=None)
+        data = data.iloc[:, 0]
+        data = pd.DataFrame(data)
+        data.columns = ['word']
+        context['preview_data'] = data.head(5)
+        print(context['preview_data'])
         return context
 
     def post(self, request, *args, **kwargs):

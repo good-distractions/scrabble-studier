@@ -4,9 +4,9 @@
 <form method="POST">
     {% csrf_token %} 
     {{form.as_p}}
-    <input type="submit" value="Confirm Delete" />
+    <input type="submit" class="btn" value="Confirm Delete" />
   </form>
-  <a href="/dictionary/{{dictionary.id}}"">
+  <a href="/dictionary/{{dictionary.id}}">
     Return to Dictionary
               </a>
 {%endblock%}

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {%block content%}
-<h1>Dictinoary Form</h1>
+<h1>Dictionary Form</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %} 
     {{form.as_p}}
-    <input type="submit" value = "Submit">
+    <input type="submit" class="btn" value = "Submit">
 </form>
 {%endblock%}

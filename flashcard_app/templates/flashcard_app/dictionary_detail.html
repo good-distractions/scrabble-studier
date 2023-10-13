@@ -1,25 +1,25 @@
 {% extends 'base.html' %} {% load static %}
- <!-- {% load datagateway_template_tags %}  -->
+ {% load datagateway_template_tags %} 
  {%block content%}
-<div class="flex">
+<div class="flex" id="study-form row">
   <h1>{{dictionary.title}}</h1>
-  <h1>{{dictionary.source}}</h1>
-  <h1>Preview</h1>
-  <!-- 
-  <table id="dictionary_preview" class="table table-bordered dt-responsive nowrap w-100">
+  <!-- <h1>{{dictionary.source}}</h1> -->
+  <!-- <h1>Preview</h1> -->
+  <div class="">
+  <table id="preview_data" class="table table-bordered">
     <thead>
-      preview_data | convert_data_frame_to_html_table_headers | safe
+      {{preview_data | convert_data_frame_to_html_table_headers | safe}}
     </thead>
     <tbody>
-      preview_data | convert_data_frame_to_html_table_rows | safe
+      {{preview_data | convert_data_frame_to_html_table_rows | safe}}
     </tbody>
    </table>
-  -->
+  </div>
    <form method="POST" action="{% url 'flashcard_app:study_dictionary' dictionary.pk  %}" class="">
    {% csrf_token %}
    <input type="hidden" name="form_type" value="filterForm">
    {{ form.as_p }}
-  <button type="submit" class="save btn btn-default" name="form">Study</button>
+  <input type="submit" class="btn"  name="form"></input>
 </form>
 </div>
 {%endblock%}

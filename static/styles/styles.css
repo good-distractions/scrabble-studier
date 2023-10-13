@@ -1,0 +1,78 @@
+@font-face {
+  font-family: Interstate;
+  font-weight: normal;
+  src: url("./fonts/interstate-2-cdnfonts/InterstateBlack.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: Interstate;
+  font-weight: bold;
+  src: url("./fonts/interstate-2-cdnfonts/InterstateBold.otf")
+    format("opentype");
+}
+
+@font-face {
+    font-family: Interstate;
+    font-weight: lighter;
+    src: url("./fonts/interstate-2-cdnfonts/InterstateExtraLight.otf")
+      format("opentype");
+  }
+
+  @font-face {
+    font-family: Interstate;
+    font-weight: light;
+    src: url("./fonts/interstate-2-cdnfonts/InterstateLight.otf")
+      format("opentype");
+  }
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  font-family: "Interstate";
+  font-weight: light;
+  /* background-color: #5c2e2223; */
+  background-color: #ffdc9f61 !important;
+  color: #5c2e22 !important;
+}
+
+.scrabble-style {
+  font-family: "Interstate";
+  color: #5c2e22;
+  font-weight: bold;
+  border: 4px solid #ebba6a;
+  border-radius: 2px;
+  background-color: #ffdb9f;
+  height: 60px;
+  width: 60px;
+  margin-right: 10px;
+  padding: 5px 0;
+  text-align: center;
+    /* background-image: repeating-linear-gradient(90deg, white, white 13.5px, black 30px); */
+}
+
+.navbar {
+   background-color: #ffdc9f68 !important;
+   margin-bottom: 5px;
+}
+
+#scrabble-title {
+    margin-left: 5px;
+}
+
+#preview_data {
+    text-align: center;
+    width:fit-content !important;
+    max-width: 100px !important;
+    margin: 5px auto;
+    border: #5c2e22;
+    color: #5c2e22;
+}
+
+.btn {
+  border-color:#ebba6a;
+  background-color:#ffdb9f;
+  margin-bottom: 5px;
+}

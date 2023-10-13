@@ -1,14 +1,12 @@
 {% extends 'base.html' %} {% load static %}
- <!-- {% load datagateway_template_tags %}  -->
  {%block content%}
 <div class="flex">
   <h1>{{dictionary.title}}</h1>
-  <h1>{{dictionary.source}}</h1>
   <div id="flashcards"></div>
   <script src="{% static 'flashcard_app/script.js' %}"></script>
   <script type='text/javascript'>
     var wordList = {{ my_data|safe }};
     </script>
-    <a href="/dictionary/{{dictionary.id}}"><button>Return to Dictionary</button></a>
+    <a href="/dictionary/{{dictionary.id}}"><button class="btn">Return to Dictionary</button></a>
 </div>
 {%endblock%}

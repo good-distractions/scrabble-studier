@@ -3,11 +3,13 @@ register = template.Library()
 
 
 def convert_data_frame_to_html_table_headers(df):
-   html = "<tr>"
-   for col in df.columns:
-      html += f"<th>{col}</th>"
-      html += "</tr>"
-   return html
+    html = "<tr><th>Preview</th></tr>"
+    return html
+#    html = "<tr>"
+#    for col in df.columns:
+#       html += f"<th>{col}</th>"
+#       html += "</tr>"
+
 
 
 def convert_data_frame_to_html_table_rows(df):

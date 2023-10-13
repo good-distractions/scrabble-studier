@@ -12,20 +12,18 @@ var initializePage = function () {
   isPaused = false;
   endCards = true;
   wordNum = 0;
-  // reset word array and word num
-  // wordList = [];
-  // wordNum = 0;
   // initialize interval todo: based user input
   // initialize instructions and start flashcards elements
   var introEl = document.createElement("div");
   introEl.id = "intro-content";
-  mainTitleEl.textContent = "Scrabble Flashcards";
+  mainTitleEl.textContent = "";
   var introInstructionsEl = document.createElement("p");
   introInstructionsEl.id = "instructions";
   introInstructionsEl.textContent =
-    "You will be shown the words from the selected dictionary. Each word will remain on screen for 3 seconds";
+    "You will be shown the words from the selected dictionary. Each word will remain on screen for 3 seconds.";
   var startFlashcardsEl = document.createElement("button");
   startFlashcardsEl.id = "start-flashcards";
+  startFlashcardsEl.className = "btn";
   startFlashcardsEl.textContent = "Start Flashcards";
   startFlashcardsEl.addEventListener("click", startFlashcardsHandler);
   // append instructions, start quiz and title to main
@@ -47,15 +45,10 @@ var startFlashcardsHandler = function () {
   document.querySelector("#start-flashcards").remove();
   var pauseFlashcardsEl = document.createElement("button");
   pauseFlashcardsEl.id = "pause-flashcards";
+  pauseFlashcardsEl.className = "btn";
   pauseFlashcardsEl.textContent = "Pause";
   pauseFlashcardsEl.addEventListener("click", pauseFlashcardsHandler);
   mainEl.append(pauseFlashcardsEl);
-  // var endFlashcardsEl = document.createElement("button");
-  // endFlashcardsEl.id = "end-flashcards";
-  // endFlashcardsEl.textContent = "End";
-  // endFlashcardsEl.addEventListener("click", endFlashcardsHandler);
-  // mainEl.append(endFlashcardsEl);
-  // call display first word
   displayWords();
 };
 
@@ -94,6 +87,7 @@ var pauseFlashcardsHandler = function () {
   var resumeFlashcardsEl = document.createElement("button");
   resumeFlashcardsEl.id = "resume-flashcards";
   resumeFlashcardsEl.textContent = "Resume";
+  resumeFlashcardsEl.className = "btn";
   resumeFlashcardsEl.addEventListener("click", resumeFlashcardsHandler);
   mainEl.append(resumeFlashcardsEl);
 };
@@ -105,6 +99,7 @@ var resumeFlashcardsHandler = function () {
   var pauseFlashcardsEl = document.createElement("button");
   pauseFlashcardsEl.id = "pause-flashcards";
   pauseFlashcardsEl.textContent = "Pause";
+  pauseFlashcardsEl.className = "btn";
   pauseFlashcardsEl.addEventListener("click", pauseFlashcardsHandler);
   mainEl.append(pauseFlashcardsEl);
   displayWords();
