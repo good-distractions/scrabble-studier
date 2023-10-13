@@ -1,0 +1,14 @@
+@font-face {
+    font-family: GraublauWeb;
+    src: url("path/GraublauWeb.otf") format("opentype");
+}
+
+@font-face {
+    font-family: GraublauWeb;
+    font-weight: bold;
+    src: url("path/GraublauWebBold.otf") format("opentype");
+}
+
+#site-title {
+    font-family: 'GrablauWeb';
+}
