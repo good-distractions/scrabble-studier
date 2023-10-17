@@ -192,10 +192,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = ['*']
 
-CORS_ALLOWED_ORIGINS = ['https://api.example.com', 'https://example.com', 'https://www.example.com' ]
+CORS_ALLOWED_ORIGINS = ['https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 'https://scrabble-studier-ccda039bdec1.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://api.example.com', 'https://example.com', 'https://www.example.com'
+   'https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 'https://scrabble-studier-ccda039bdec1.herokuapp.com'
 ]
-
-ALLOWED_HOSTS = ["0.0.0.0", "api.example.com", "example.com"]
