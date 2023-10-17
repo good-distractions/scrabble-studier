@@ -1,11 +1,39 @@
-@font-face {
+/* @font-face {
   font-family: Interstate;
   font-weight: normal;
   src: url("..static/fonts/interstate-2-cdnfonts/InterstateBlack.otf")
     format("opentype");
+} */
+
+@font-face {
+  font-family: Interstate;
+  font-weight: normal;
+  src: url("styles/fonts/interstate-2-cdnfonts/InterstateBlack.otf")
+    format("opentype");
 }
 
 @font-face {
+  font-family: Interstate;
+  font-weight: bold;
+  src: url("styles/fonts/interstate-2-cdnfonts/InterstateBold.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: Interstate;
+  font-weight: normal;
+  src: url("..static/styles/fonts/interstate-2-cdnfonts/InterstateBlack.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: Interstate;
+  font-weight: bold;
+  src: url("..static/styles/fonts/interstate-2-cdnfonts/InterstateBold.otf")
+    format("opentype");
+}
+
+/* @font-face {
   font-family: Interstate;
   font-weight: bold;
   src: url("..static/fonts/interstate-2-cdnfonts/InterstateBold.otf")
@@ -24,7 +52,7 @@
     font-weight: light;
     src: url("..static/fonts/interstate-2-cdnfonts/InterstateLight.otf")
       format("opentype");
-  }
+  } */
 
 body {
   margin: 0;
