@@ -19,7 +19,10 @@ class HomeView(TemplateView):
 
 class DictionaryCreateView(CreateView):
     model = models.Dictionary
-    fields = '__all__'
+    fields = ['title','source','file','public']
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TodoView, self).form_valid(form)
     success_url = reverse_lazy('flashcard_app:dictionaries')
     
     def form_valid(self, form):
@@ -63,7 +66,9 @@ class DictionaryDetailView(DetailView, FormMixin):
         data = pd.DataFrame(data)
         data.columns = ['word']
         context['preview_data'] = data.head(5)
-        print(context['preview_data'])
+        context['is_owner'] = self.object.user.id == self.request.user.id
+        context['is_public'] = self.object.public
+        context['is_owner_or_public'] = context['is_owner']|context['is_public']
         return context
 
     def post(self, request, *args, **kwargs):
@@ -130,54 +135,61 @@ class DictionaryStudyAllView(TemplateView):
         context = super(DictionaryStudyAllView,
                         self).get_context_data(**kwargs)
         filter_vals = {}
-        filter_vals['filter_type'] = self.request.POST['filter_type']
-        # print(filter_vals)
-        filter_vals['substring'] = self.request.POST['substring']
-        filter_vals['word_length'] = self.request.POST['word_length']
-        primary_key = context['args'][0]
-        dictionary = models.Dictionary.objects.get(pk=primary_key)
-        context['dictionary'] = dictionary
-        data = pd.read_csv(dictionary.file, header=None)
-        data = data.iloc[:, 0]
-        print(filter_vals)
-        if filter_vals['filter_type']== 'all':
-            pass
-        elif filter_vals['filter_type']== 'q_no_u':
-            data = data[data.str.contains('q', case=False, na=False)]
-            data = data[~data.str.contains('u', case=False, na=False)]
-        elif filter_vals['filter_type']== 'palindrome':
-            data = pd.DataFrame(data)
-            data.columns = ['word']
-            data['rev'] = data['word'].str[::-1]
-            data = data[data['rev']==data['word']]
+        try: 
+            filter_vals['filter_type'] = self.request.POST['filter_type']
+            # print(filter_vals)
+            filter_vals['substring'] = self.request.POST['substring']
+            filter_vals['word_length'] = self.request.POST['word_length']
+            primary_key = context['args'][0]
+            dictionary = models.Dictionary.objects.get(pk=primary_key)
+            context['dictionary'] = dictionary
+            data = pd.read_csv(dictionary.file, header=None)
             data = data.iloc[:, 0]
-        elif filter_vals['filter_type']== '7l5v':
-            data = data[data.str.len() == 7]
-            data = data[data.str.count(r'[aeiouAEIOU]') == 5]
-        elif filter_vals['filter_type']== '5l4v':
-            data = data[data.str.len() == 5]
-            data = data[data.str.count(r'[aeiouAEIOU]') == 4]
-        elif filter_vals['filter_type']== 'satine':
-            data = data[data.str.len() == 7]
-            data = data[data.str.contains('s', case=False, na=False)]
-            data = data[data.str.contains('a', case=False, na=False)]
-            data = data[data.str.contains('t', case=False, na=False)]
-            data = data[data.str.contains('i', case=False, na=False)]
-            data = data[data.str.contains('n', case=False, na=False)]
-            data = data[data.str.contains('e', case=False, na=False)]
-        elif filter_vals['filter_type']== 'endinz':
-            data = data[data.str.endswith('z')|data.str.endswith('Z')]
-        elif filter_vals['filter_type']== 'no_vowels':
-            print('no_vowels')
-            data = data[data.str.count(r'[aeiouAEIOU]') == 0]
-        if filter_vals['word_length'] !='':
-            data = data[data.str.len() == int(filter_vals['word_length'])]
-        if filter_vals['substring'] != '':
-            data = data[data.str.contains(filter_vals['substring'], case=False, na=False)]
-        print(data.head(10))
-        data = data.values.tolist()
-        context['my_data'] = json.dumps(data)
-        context['time_between_words'] = self.request.POST['time_between_words']
+            print(filter_vals)
+            if filter_vals['filter_type']== 'all':
+                pass
+            elif filter_vals['filter_type']== 'q_no_u':
+                data = data[data.str.contains('q', case=False, na=False)]
+                data = data[~data.str.contains('u', case=False, na=False)]
+            elif filter_vals['filter_type']== 'palindrome':
+                data = pd.DataFrame(data)
+                data.columns = ['word']
+                data['rev'] = data['word'].str[::-1]
+                data = data[data['rev']==data['word']]
+                data = data.iloc[:, 0]
+            elif filter_vals['filter_type']== '7l5v':
+                data = data[data.str.len() == 7]
+                data = data[data.str.count(r'[aeiouAEIOU]') == 5]
+            elif filter_vals['filter_type']== '5l4v':
+                data = data[data.str.len() == 5]
+                data = data[data.str.count(r'[aeiouAEIOU]') == 4]
+            elif filter_vals['filter_type']== 'satine':
+                data = data[data.str.len() == 7]
+                data = data[data.str.contains('s', case=False, na=False)]
+                data = data[data.str.contains('a', case=False, na=False)]
+                data = data[data.str.contains('t', case=False, na=False)]
+                data = data[data.str.contains('i', case=False, na=False)]
+                data = data[data.str.contains('n', case=False, na=False)]
+                data = data[data.str.contains('e', case=False, na=False)]
+            elif filter_vals['filter_type']== 'endinz':
+                data = data[data.str.endswith('z')|data.str.endswith('Z')]
+            elif filter_vals['filter_type']== 'no_vowels':
+                print('no_vowels')
+                data = data[data.str.count(r'[aeiouAEIOU]') == 0]
+            if filter_vals['word_length'] !='':
+                data = data[data.str.len() == int(filter_vals['word_length'])]
+            if filter_vals['substring'] != '':
+                data = data[data.str.contains(filter_vals['substring'], case=False, na=False)]
+            data = data.values.tolist()
+            context['my_data'] = json.dumps(data)
+            context['time_between_words'] = self.request.POST['time_between_words']
+            context['is_owner'] = dictionary.user.id == self.request.user.id
+            context['is_public'] = dictionary.public
+        except:
+            context['is_owner'] = False
+            context['is_public'] = False
+            pass
+        context['is_owner_or_public'] = context['is_owner']|context['is_public']
         return context
     
 class RegisterView(View):
