@@ -85,6 +85,11 @@ class DictionaryDetailView(DetailView, FormMixin):
         return super(DictionaryDetailView, self).form_valid(form)
     # https://stackoverflow.com/questions/47623088/detailview-object-relations    
     
+class PublicDictionaryListView(ListView):
+    model = models.Dictionary
+    fields = '__all__'
+    context_object_name = 'dictionary_list'
+    template_name ='flashcard_app/public_dictionary_list.html'
 
 class DictionaryListView(ListView):
     model = models.Dictionary
@@ -92,6 +97,7 @@ class DictionaryListView(ListView):
     context_object_name = 'dictionary_list'
     
 # https://stackoverflow.com/questions/59480402/how-to-use-django-filter-with-a-listview-class-view-for-search
+
 class FilteredDictionaryListView(FilterView):
     model = models.Dictionary
     fields = '__all__'
@@ -102,18 +108,14 @@ class FilteredDictionaryListView(FilterView):
     def get_queryset(self):
         # Get the queryset however you usually would.  For example:
         queryset = super().get_queryset()
+        queryset = queryset.filter(public=True)|queryset.filter(user=self.request.user.id)
         # Then use the query parameters and the queryset to
         # instantiate a filterset and save it as an attribute
         # on the view instance for later.
-        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        self.filterset = self.filterset_class(self.request.GET,queryset=queryset, request=self.request)
         # Return the filtered queryset
         return self.filterset.qs.distinct()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Pass the filterset to the template - it provides the form.
-        context['filterset'] = self.filterset
-        return context
 
 
 class DictionaryStudyAllView(TemplateView):
