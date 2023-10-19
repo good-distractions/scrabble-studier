@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% load static %}
  {%block content%}
+ {%if is_owner_or_public%}
 <div class="flex">
   <h1>{{dictionary.title}}</h1>
   <div id="flashcards"></div>
@@ -10,4 +11,7 @@
     </script>
     <a href="/dictionary/{{dictionary.id}}"><button class="btn">Return to Dictionary</button></a>
 </div>
+{%else%}
+<h1>You don't have permission to view this page</h1>
+{%endif%}
 {%endblock%}

@@ -1,10 +1,9 @@
 {% extends 'base.html' %} {% load static %}
  {% load datagateway_template_tags %} 
  {%block content%}
+ {%if is_owner_or_public%}
 <div class="flex" id="study-form row">
   <h1>{{dictionary.title}}</h1>
-  <!-- <h1>{{dictionary.source}}</h1> -->
-  <!-- <h1>Preview</h1> -->
   <div class="">
   <table id="preview_data" class="table table-bordered">
     <thead>
@@ -22,4 +21,7 @@
   <input type="submit" class="btn"  name="form"></input>
 </form>
 </div>
+{%else%}
+<h1>You don't have permission to view this page</h1>
+{%endif%}
 {%endblock%}
