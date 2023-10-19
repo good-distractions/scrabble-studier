@@ -6,6 +6,7 @@
   <script src="{% static 'flashcard_app/script.js' %}"></script>
   <script type='text/javascript'>
     var wordList = {{ my_data|safe }};
+    var timeBetween = {{time_between_words|safe}}
     </script>
     <a href="/dictionary/{{dictionary.id}}"><button class="btn">Return to Dictionary</button></a>
 </div>

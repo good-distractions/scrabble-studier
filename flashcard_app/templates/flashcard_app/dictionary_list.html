@@ -1,10 +1,21 @@
-{% extends 'base.html' %} {%block content%}
+{% extends 'base.html' %} 
+{%block content%}
+{%if user.is_authenticated%}
 <h1>Dictionaries</h1>
-<div>
-  {% for dictionary in dictionary_list %}
-  <div>
+{%else%}
+<h1>Public Dictionaries</h1>
+{%endif%}
+{%if user.is_authenticated%}
+  <form action="" method="get">
+    <label >Show Public Dictionaries?</label>
+    {{ filter.form.public }}
+    <input type="submit" value="Search"/>
+  </form>
+{%endif%}
+<ul>
+    {% for dictionary in dictionary_list %}
     <a href="/dictionary/{{dictionary.id}}" >{{dictionary.title}}</a>
-  </div>
-  {% endfor%}
+    {% endfor %}
+</ul>
 </div>
 {%endblock%}

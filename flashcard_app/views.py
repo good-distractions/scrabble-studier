@@ -1,9 +1,14 @@
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.views import View
 from flashcard_app import models
 import pandas as pd
+from flashcard_app.filters import DictionaryFilterSet
+from django_filters.views import FilterView
 import json
-from .forms import CustomFilterForm
+from django.contrib import messages
+from django.shortcuts import render,redirect
+from .forms import CustomFilterForm,RegisterForm
 from django.views.generic.edit import FormMixin
 
 
@@ -16,6 +21,10 @@ class DictionaryCreateView(CreateView):
     model = models.Dictionary
     fields = '__all__'
     success_url = reverse_lazy('flashcard_app:dictionaries')
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(DictionaryCreateView, self).form_valid(form)
 
 
 class DictionaryUpdateView(UpdateView):
@@ -76,11 +85,37 @@ class DictionaryDetailView(DetailView, FormMixin):
         return super(DictionaryDetailView, self).form_valid(form)
     # https://stackoverflow.com/questions/47623088/detailview-object-relations    
     
+class PublicDictionaryListView(ListView):
+    model = models.Dictionary
+    fields = '__all__'
+    context_object_name = 'dictionary_list'
+    template_name ='flashcard_app/public_dictionary_list.html'
 
 class DictionaryListView(ListView):
     model = models.Dictionary
     fields = '__all__'
     context_object_name = 'dictionary_list'
+    
+# https://stackoverflow.com/questions/59480402/how-to-use-django-filter-with-a-listview-class-view-for-search
+
+class FilteredDictionaryListView(FilterView):
+    model = models.Dictionary
+    fields = '__all__'
+    context_object_name = 'dictionary_list'
+    filterset_class = DictionaryFilterSet
+    template_name = 'flashcard_app/dictionary_list.html'
+
+    def get_queryset(self):
+        # Get the queryset however you usually would.  For example:
+        queryset = super().get_queryset()
+        queryset = queryset.filter(public=True)|queryset.filter(user=self.request.user.id)
+        # Then use the query parameters and the queryset to
+        # instantiate a filterset and save it as an attribute
+        # on the view instance for later.
+        self.filterset = self.filterset_class(self.request.GET,queryset=queryset, request=self.request)
+        # Return the filtered queryset
+        return self.filterset.qs.distinct()
+
 
 
 class DictionaryStudyAllView(TemplateView):
@@ -142,4 +177,27 @@ class DictionaryStudyAllView(TemplateView):
         print(data.head(10))
         data = data.values.tolist()
         context['my_data'] = json.dumps(data)
+        context['time_between_words'] = self.request.POST['time_between_words']
         return context
+    
+class RegisterView(View):
+    form_class = RegisterForm
+    initial = {'key': 'value'}
+    template_name = 'register.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            form.save()
+
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}')
+
+            return redirect(to='/')
+
+        return render(request, self.template_name, {'form': form})       
