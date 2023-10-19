@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="">
+        <div class="">
+            <div class="">
+                <div class="">
+                    <div class="">
+                        <div class="">
+                            <h3 class="">Create Account</h3>
+                        </div>
+                        <div class="">
+                            <form method='post' >
+                                {% csrf_token %}
+                                {% if form.errors %}
+                                    <div class="" role="alert">
+                                        <div id="form_errors">
+                                            {% for key, value in form.errors.items %}
+                                                <strong>{{ value }}</strong>
+                                            {% endfor %}
+                                        </div>
+                                        <button type="button" class="" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                                <div class="form-row">
+                                    <div class="">
+                                        <div class="">
+                                            <label class="">First Name</label>
+                                            {{ form.first_name }}
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="">
+                                            <label class="">Last Name</label>
+                                            {{ form.last_name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="">
+                                        <div class="">
+                                            <label class="">Username</label>
+                                            {{ form.username }}
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="">
+                                            <label class="">Email</label>
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="">
+                                        <div class="">
+                                            <label class="">Password</label>
+                                            {{ form.password1 }}
+                                            {{ form.errors.password }}
+                                        </div>
+                                    </div>
+                                    <div class="">
+
+                                        <div class="">
+                                            <label class="">Confirm Password</label>
+                                            {{ form.password2 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit">Sign Up</button>
+                            </form>
+                        </div>
+                        <div class="">
+                            <div class="">
+                                <a  href="{% url 'login' %}?next={{request.path}}">Have an account? Go to Sign in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

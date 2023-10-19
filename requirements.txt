@@ -10,5 +10,7 @@ psycopg
 django-storages
 boto3
 pandas
+django-cors-headers
+django_filter
 psycopg; sys_platform == "linux"
 psycopg[binary]; sys_platform != "linux"
