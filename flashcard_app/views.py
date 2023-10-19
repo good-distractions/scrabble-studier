@@ -177,6 +177,7 @@ class DictionaryStudyAllView(TemplateView):
         print(data.head(10))
         data = data.values.tolist()
         context['my_data'] = json.dumps(data)
+        context['time_between_words'] = self.request.POST['time_between_words']
         return context
     
 class RegisterView(View):

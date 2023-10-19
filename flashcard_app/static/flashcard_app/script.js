@@ -2,7 +2,6 @@ var flashcardEl = document.getElementById("flashcards");
 var mainEl = document.createElement("main");
 var mainTitleEl = document.createElement("h1");
 mainTitleEl.id = "main-title";
-var timeBetween = 2;
 var isPaused = false;
 var endCards = true;
 var wordNum = 0;
@@ -49,6 +48,10 @@ var startFlashcardsHandler = function () {
   pauseFlashcardsEl.textContent = "Pause";
   pauseFlashcardsEl.addEventListener("click", pauseFlashcardsHandler);
   mainEl.append(pauseFlashcardsEl);
+  // display first word
+  mainTitleEl.textContent = wordList[wordNum];
+  wordNum++;
+  // loop through words
   displayWords();
 };
 
@@ -63,8 +66,9 @@ function intervalLoop(millisec) {
 
 async function displayWords() {
   for (var i = wordNum; (i < wordList.length) & !isPaused & !endCards; i++) {
-    await intervalLoop(timeBetween * 1000);
     var currentWord = wordList[i];
+    await intervalLoop(timeBetween * 1000);
+    // var currentWord = wordList[i];
     mainTitleEl.textContent = currentWord;
     wordNum++;
   }

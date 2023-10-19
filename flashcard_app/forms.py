@@ -59,12 +59,14 @@ class CustomFilterForm(forms.Form):
     filter_type = forms.ChoiceField(widget=forms.Select, choices=FILTER_CHOICES)
     substring = forms.CharField(widget=forms.TextInput(),max_length=30)
     word_length = forms.IntegerField(widget=forms.NumberInput(),min_value=1)
+    time_between_words = forms.IntegerField(widget=forms.NumberInput(),min_value=1, initial=3)
     
     def __init__(self, *args, **kwargs):
         super(CustomFilterForm, self).__init__(*args, **kwargs)
         self.fields['substring'].required = False
         self.fields['word_length'].required = False
         self.fields['filter_type'].required = True
+        self.fields['time_between_words'].required = True
     
     def load_data(self):
         # do something with self.cleaned_data
