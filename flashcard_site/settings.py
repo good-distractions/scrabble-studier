@@ -193,7 +193,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = ['*']
 
-CORS_ALLOWED_ORIGINS = ['https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 'https://scrabble-studier-ccda039bdec1.herokuapp.com','https://lexilinguapro.com','https://lexilingua.pro']
+CORS_ALLOWED_ORIGINS = ['https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 'https://scrabble-studier-ccda039bdec1.herokuapp.com','https://wordywhiz.com']
 
 CSRF_TRUSTED_ORIGINS = [
    'https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 'https://scrabble-studier-ccda039bdec1.herokuapp.com'
