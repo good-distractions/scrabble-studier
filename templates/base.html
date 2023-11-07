@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load user_agents %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -94,11 +94,18 @@
        <p class="scrabble-style">&nbsp;R&nbsp;</p>
        <p class="scrabble-style">&nbsp;D&nbsp;</p>
        <p class="scrabble-style">&nbsp;Y&nbsp;</p>
-       <p class="scrabble-style">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+       {% if request|is_mobile %}
+     {%else%}
+      <p class="scrabble-style">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+       {%endif%}
        <p class="scrabble-style">&nbsp;W&nbsp;</p>
        <p class="scrabble-style">&nbsp;H&nbsp;</p>
        <p class="scrabble-style">&nbsp;I&nbsp;</p>
        <p class="scrabble-style">&nbsp;Z&nbsp;</p>
+       {% if request|is_mobile %}
+       <p class="scrabble-style">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+       {%else%}
+         {%endif%}
       </div>
       </h1>
       <div
