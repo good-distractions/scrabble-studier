@@ -15,6 +15,10 @@ from django.views.generic.edit import FormMixin
 
 class HomeView(TemplateView):
     template_name = 'flashcard_app/index.html'
+    
+
+class PrivacyView(TemplateView):
+    template_name = 'flashcard_app/privacy_policy.html'
 
 
 class DictionaryCreateView(CreateView):
