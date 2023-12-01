@@ -20,7 +20,7 @@ This applications provides word game enthusiasts a flashcard style tool to expan
 - Pandas
 
 ##
-![Image of portfolio](./assets/images/screenshot.png)
+![Image of portfolio](./screenshot.png)
 
 
 ## Contributors
