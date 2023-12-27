@@ -1,9 +1,11 @@
 {% extends 'base.html' %} 
 {%block content%}
 {%if user.is_authenticated%}
+
 <h1>Dictionaries</h1>
 {%else%}
 <h1>Public Dictionaries</h1>
+<p>Log in or create an account to upload your own!</p>
 {%endif%}
 {%if user.is_authenticated%}
   <form action="" method="get">
@@ -12,9 +14,10 @@
     <input type="submit" value="Search"/>
   </form>
 {%endif%}
-<ul>
+<div class=" d-flex mx-auto">
+<ul class="list-group list-group-flush mx-auto justify-content-center text-center">
     {% for dictionary in dictionary_list %}
-    <a href="/dictionary/{{dictionary.id}}" >{{dictionary.title}}</a>
+    <a class="list-group-item list-group-item-action" href="/dictionary/{{dictionary.id}}" >{{dictionary.title}}</a>
     {% endfor %}
 </ul>
 </div>
