@@ -5,6 +5,9 @@
 <div class="flex" id="study-form row">
   <h1>{{dictionary.title}}</h1>
   <div class="">
+    {%if dictionary.description%}
+    <p> {{dictionary.description}}</p>
+    {%endif%}
   <table id="preview_data" class="table table-bordered">
     <thead>
       {{preview_data | convert_data_frame_to_html_table_headers | safe}}

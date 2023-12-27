@@ -23,10 +23,10 @@ class PrivacyView(TemplateView):
 
 class DictionaryCreateView(CreateView):
     model = models.Dictionary
-    fields = ['title','source','file','public']
+    fields = ['title','description','file','public']
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(TodoView, self).form_valid(form)
+        return super(DictionaryCreateView, self).form_valid(form)
     success_url = reverse_lazy('flashcard_app:dictionaries')
     
     def form_valid(self, form):
