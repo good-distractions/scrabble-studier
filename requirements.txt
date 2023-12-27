@@ -9,6 +9,7 @@ dj_database_url
 psycopg
 django-storages
 boto3
+django_user_agents
 pandas
 django-cors-headers
 django_filter
