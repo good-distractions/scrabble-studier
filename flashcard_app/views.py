@@ -16,6 +16,9 @@ from django.views.generic.edit import FormMixin
 class HomeView(TemplateView):
     template_name = 'flashcard_app/index.html'
     
+class GetStartedView(TemplateView):
+    template_name = 'flashcard_app/get_started.html'
+    
 
 class PrivacyView(TemplateView):
     template_name = 'flashcard_app/privacy_policy.html'
