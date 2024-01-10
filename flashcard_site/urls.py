@@ -12,7 +12,14 @@ urlpatterns = [
     path('', RedirectView.as_view(url='')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('apis/v1/', include('apis.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# urlpatterns += [
+#     path('api-auth/', include('rest_framework.urls')),
+# ]
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

@@ -1,38 +1,33 @@
-# apis/serializers.py
 from rest_framework import serializers
 from flashcard_app import models
 from django.contrib.auth.models import User
 
-
 class DictionarySerializer(serializers.ModelSerializer):
     class Meta:
-        fields = (
+        fields = [
             'id',
             'title',
             'description',
             'file',
             'user',
-            'public'
-        )
+            'public',
+            'filter_all'
+        ]
         model = models.Dictionary
         
+        
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only = True)
-    
-    def create(self, validated_data):
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            password=validated_data['password'],
-        )
-        return user
+    dictionaries = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Dictionary.objects.all())
     
     class Meta:
-        fields = (
+        model = User
+        fields = [
             'id',
             'first_name',
             'last_name',
             'email',
             'username',
-            'password'
-        )
-        model = User
+            'password', 
+            'dictionaries'
+        ]
+        
