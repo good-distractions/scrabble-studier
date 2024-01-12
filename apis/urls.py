@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.authtoken import views
-from .views import DictionaryViewset, UserDetail, UserList, ListDictionary, DetailDictionary
+from .views import DictionaryViewset, UserDictionaries, UserDetailAPI,RegisterUserAPIView,UserDetail, UserList, ListDictionary, DetailDictionary
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -12,10 +12,16 @@ urlpatterns = [
     path('dictionary/', ListDictionary.as_view()),
     path('dictionary/<int:pk>/', DetailDictionary.as_view()),
     path('user/<int:pk>/', UserDetail.as_view()),
-    path('user/', UserList.as_view())
+    path('user/', UserList.as_view()),
+    path('user_dictionaries/', UserDictionaries.as_view()),
 ]
 
 
 urlpatterns += [
     path('api-token-auth/', views.obtain_auth_token)
+]
+
+urlpatterns += [
+  path("user/details",UserDetailAPI.as_view()),
+  path('user/register',RegisterUserAPIView.as_view()),
 ]
