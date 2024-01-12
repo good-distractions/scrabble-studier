@@ -15,7 +15,8 @@ class DictionarySerializer(serializers.ModelSerializer):
             'file',
             'user',
             'public',
-            'filter_all'
+            # 'filter_all',
+            'preview'
         ]
         model = models.Dictionary
         

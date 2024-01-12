@@ -46,10 +46,10 @@ class UserDictionaries(generics.ListCreateAPIView):
     serializer_class = DictionarySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
-class DetailDictionary(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.Dictionary.objects.all()
-    serializer_class = DictionarySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+# class DetailDictionary(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = models.Dictionary.objects.all()
+#     serializer_class = DictionarySerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class DetailDictionary(generics.RetrieveAPIView):
     queryset = models.Dictionary.objects.all()
