@@ -16,14 +16,6 @@ class DictionaryViewset(viewsets.ModelViewSet):
     queryset = models.Dictionary.objects.all()
     serializer_class = DictionarySerializer
     
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class=UserSerializer
-    
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class=UserSerializer
-    
 class ListDictionary(generics.ListCreateAPIView):
     queryset = models.Dictionary.objects.all()
     serializer_class = DictionarySerializer
@@ -37,19 +29,33 @@ class UserDictionaries(generics.ListCreateAPIView):
         if user.exists():
             user = user.last().user
             user = models.User.objects.get(username=user)
-        print(user)
         # dictionaries = get_objects(models.Dictionary, user = user)
         dictionaries =  models.Dictionary.objects.filter(user=user.pk).all()
         return dictionaries
     
-    # queryset = models.Dictionary.objects.all()
     serializer_class = DictionarySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
-# class DetailDictionary(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = models.Dictionary.objects.all()
+
+class UploadDictionary(generics.CreateAPIView):
+    queryset = models.Dictionary.objects.all()
+    serializer_class = DictionarySerializer
+
+  
+# class UploadDictionary(generics.CreateAPIView):
 #     serializer_class = DictionarySerializer
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes = (AllowAny,)
+#     # def create(self, request, *args, **kwargs):
+#     #     user = Token.objects.filter(*args, **kwargs)
+#     #     if user.exists():
+#     #         user = user.last().user
+#     #         user = models.User.objects.get(username=user)
+
+#     #     models.Dictionary.objects.create()
+
+    
+#     serializer_class = DictionarySerializer
 
 class DetailDictionary(generics.RetrieveAPIView):
     queryset = models.Dictionary.objects.all()
@@ -62,6 +68,15 @@ class DetailDictionary(generics.RetrieveAPIView):
     #     context["query_params"] = self.request.query_params
     #     return context
     
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class=UserSerializer
+    
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class=UserSerializer
+    
+
 # Class based view to Get User Details using Token Authentication
 class UserDetailAPI(APIView):
   authentication_classes = (TokenAuthentication,)
@@ -79,3 +94,4 @@ class UserDetailAPI(APIView):
 class RegisterUserAPIView(generics.CreateAPIView):
   permission_classes = (AllowAny,)
   serializer_class = RegisterSerializer
+

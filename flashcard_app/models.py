@@ -29,14 +29,45 @@ class Dictionary(models.Model):
         return (data)
     
     @property
-    def filter_all(self):
+    def words_q1(self):
         # read & prep
-        data = pd.read_csv(self.file.url, header=None)
-        data = data.iloc[:, 0]
+        data = pd.read_csv(self.file.url, header=None, usecols=[0])
+        data = data.dropna()
+        data = data.loc[0: int(round(data.shape[0]/4))]
         data = data.values.tolist()
         data = json.dumps(data)
         return (data)
     
+    @property
+    def words_q2(self):
+        # read & prep
+        data = pd.read_csv(self.file.url, header=None, usecols=[0])
+        data = data.dropna()
+        data = data.loc[int(round(data.shape[0]/4)+1): int(round(data.shape[0]/4)*2) ]
+        data = data.values.tolist()
+        data = json.dumps(data)
+        return (data)
+    
+    @property
+    def words_q3(self):
+        # read & prep
+        data = pd.read_csv(self.file.url, header=None, usecols=[0])
+        data = data.dropna()
+        data = data.loc[int(round(data.shape[0]/4)*2+1): int(round(data.shape[0]/4)*3) ]
+        data = data.values.tolist()
+        data = json.dumps(data)
+        return (data)
+      
+    @property
+    def words_q4(self):
+    # read & prep
+        data = pd.read_csv(self.file.url, header=None, usecols=[0])
+        data = data.dropna()
+        data = data.loc[int(round(data.shape[0]/4)*3+1): int(round(data.shape[0])) ]
+        data = data.values.tolist()
+        data = json.dumps(data)
+        return (data)
+
     @property
     def filter_df_q_no_u(self):
         # read & prep

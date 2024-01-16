@@ -7,19 +7,31 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class DictionarySerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = [
-            'id',
-            'title',
-            'description',
-            'file',
-            'user',
-            'public',
-            # 'filter_all',
-            'preview'
-        ]
-        model = models.Dictionary
-        
+  class Meta:
+      fields = [
+          'id',
+          'title',
+          'description',
+          'file',
+          'user',
+          'public',
+          'words_q1',
+          'words_q2',
+          'words_q3',
+          'words_q4',
+          'preview',
+      ]
+      model = models.Dictionary   
+  def create(self, validated_data):
+    dictionary = models.Dictionary.objects.create(
+      title=validated_data['title'],
+      description=validated_data['description'],
+      public= validated_data['public'],
+      
+      file=validated_data['file']
+    )
+    dictionary.save()
+    return dictionary    
         
 class UserSerializer(serializers.ModelSerializer):
     dictionaries = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Dictionary.objects.all())
@@ -48,17 +60,12 @@ class RegisterSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ('username', 'password', 
-            #   'password2',
          'email', 'first_name', 'last_name')
     extra_kwargs = {
       'first_name': {'required': True},
       'last_name': {'required': True}
     }
-#   def validate(self, attrs):
-#     if attrs['password'] != attrs['password2']:
-#       raise serializers.ValidationError(
-#         {"password": "Password fields didn't match."})
-#     return attrs
+
   def create(self, validated_data):
     user = User.objects.create(
       username=validated_data['username'],
