@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from flashcard_app import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.response import Response
@@ -76,3 +76,13 @@ class RegisterSerializer(serializers.ModelSerializer):
     user.set_password(validated_data['password'])
     user.save()
     return user
+  
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', "first_name", "last_name")
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ("name", )

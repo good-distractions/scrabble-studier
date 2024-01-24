@@ -33,6 +33,7 @@ class Dictionary(models.Model):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
+        # data = data.loc[0:1]
         data = data.loc[0: int(round(data.shape[0]/4))]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -43,6 +44,7 @@ class Dictionary(models.Model):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
+        # data = data.loc[2:3]
         data = data.loc[int(round(data.shape[0]/4)+1): int(round(data.shape[0]/4)*2) ]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -53,6 +55,7 @@ class Dictionary(models.Model):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
+        # data = data.loc[4:5]
         data = data.loc[int(round(data.shape[0]/4)*2+1): int(round(data.shape[0]/4)*3) ]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -63,6 +66,7 @@ class Dictionary(models.Model):
     # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
+        # data = data.loc[6:7]
         data = data.loc[int(round(data.shape[0]/4)*3+1): int(round(data.shape[0])) ]
         data = data.values.tolist()
         data = json.dumps(data)
