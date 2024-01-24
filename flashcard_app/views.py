@@ -61,7 +61,6 @@ class DictionaryDetailView(DetailView, FormMixin):
         filter_type = self.form['filter_type']
         substring = self.form['substring']
         word_length = self.form['word_length']
-        print(form)
         return reverse_lazy('flashcard_app:study_dictionary', args=(self.object.id,))
         # return reverse_lazy('flashcard_app:study_dictionary_qnou', kwargs={'pk':self.object.id,'filter_type':filter_type,'word_length':word_length,'substring':substring})
 
@@ -79,17 +78,14 @@ class DictionaryDetailView(DetailView, FormMixin):
         return context
 
     def post(self, request, *args, **kwargs):
-        # print('post')
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid() and request.POST.get("form_type"):
-            print(request.POST.copy())
             request.session['POSTVALUES'] = request.POST.copy()
             request.session.modified = True
-            print(request.session['POSTVALUES'])
             return self.form_valid(form)
         else:
-            # print('invalid')
+            # ('invalid')
             return self.form_invalid(form)
 
     def form_valid(self, form):
@@ -144,7 +140,6 @@ class DictionaryStudyAllView(TemplateView):
         filter_vals = {}
         try: 
             filter_vals['filter_type'] = self.request.POST['filter_type']
-            # print(filter_vals)
             filter_vals['substring'] = self.request.POST['substring']
             filter_vals['word_length'] = self.request.POST['word_length']
             primary_key = context['args'][0]
@@ -152,7 +147,6 @@ class DictionaryStudyAllView(TemplateView):
             context['dictionary'] = dictionary
             data = pd.read_csv(dictionary.file, header=None)
             data = data.iloc[:, 0]
-            print(filter_vals)
             if filter_vals['filter_type']== 'all':
                 pass
             elif filter_vals['filter_type']== 'q_no_u':
@@ -181,7 +175,6 @@ class DictionaryStudyAllView(TemplateView):
             elif filter_vals['filter_type']== 'endinz':
                 data = data[data.str.endswith('z')|data.str.endswith('Z')]
             elif filter_vals['filter_type']== 'no_vowels':
-                print('no_vowels')
                 data = data[data.str.count(r'[aeiouAEIOU]') == 0]
             if filter_vals['word_length'] !='':
                 data = data[data.str.len() == int(filter_vals['word_length'])]
@@ -210,7 +203,6 @@ class RegisterView(View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
-        print(form.errors)
         if form.is_valid():
             form.save()
 

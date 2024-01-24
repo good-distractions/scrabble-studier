@@ -23,19 +23,6 @@ class ListDictionary(generics.ListCreateAPIView):
     serializer_class = DictionarySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
-# class UserDictionaries(generics.ListCreateAPIView):
-#     serializer_class = UserSerializer
-    
-#     def get_queryset(self,*args,**kwargs):
-#         user = self.request.user
-#         print(user)
-#         if user.exists():
-#             user = user.last().user
-#             user = User.objects.get(username=user)
-#         # dictionaries = get_objects(Dictionary, user = user)
-#         dictionaries =  Dictionary.objects.filter(user=user.pk).all()
-#         return dictionaries
-    
 class UserDictionaries(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = DictionarySerializer    
@@ -43,10 +30,16 @@ class UserDictionaries(generics.ListAPIView):
     def get_queryset(self,*args,**kwargs):
         token = self.request.headers ['Authorization'].split("Bearer ")[1]
         tokenObj = models.AccessToken.objects.get(token=token)
-        print(tokenObj.user)
         user = User.objects.get(username=tokenObj.user)
         dictionaries =  Dictionary.objects.filter(user=user.pk).all()
-        print(dictionaries)
+        return dictionaries
+    
+class PublicDictionaries(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = DictionarySerializer    
+     
+    def get_queryset(self,*args,**kwargs):
+        dictionaries =  Dictionary.objects.filter(public=True).all()
         return dictionaries
     
 
@@ -90,7 +83,6 @@ class UserDetailAPI(APIView):
   authentication_classes = [SessionAuthentication, TokenAuthentication]
   permission_classes = (AllowAny,)
   def get(self,request,*args,**kwargs):
-    print(Token.objects.filter(*args, **kwargs))
     user = Token.objects.filter(*args, **kwargs)
     if user.exists():
         user = user.last().user
