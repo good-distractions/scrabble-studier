@@ -1,34 +1,24 @@
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 from oauth2_provider import models
-from rest_framework import viewsets, generics, permissions
+from rest_framework import generics, permissions
 from flashcard_app.models import Dictionary
 from django.contrib.auth.models import User, Group
 from .serializers import DictionarySerializer
 from .serializers import UserSerializer
-from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserSerializer,RegisterSerializer, GroupSerializer
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import AllowAny
+from .serializers import UserSerializer,RegisterSerializer, GroupSerializer, DictionarySerializer
 from rest_framework import generics
-from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import  AllowAny
+from rest_framework.parsers import MultiPartParser, FormParser
 
-class DictionaryViewset(viewsets.ModelViewSet):
-    queryset = Dictionary.objects.all()
-    serializer_class = DictionarySerializer
-    
-class ListDictionary(generics.ListCreateAPIView):
-    queryset = Dictionary.objects.all()
-    serializer_class = DictionarySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
 class UserDictionaries(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = DictionarySerializer    
      
     def get_queryset(self,*args,**kwargs):
-        token = self.request.headers ['Authorization'].split("Bearer ")[1]
+        token = self.request.headers['Authorization'].split("Bearer ")[1]
         tokenObj = models.AccessToken.objects.get(token=token)
         user = User.objects.get(username=tokenObj.user)
         dictionaries =  Dictionary.objects.filter(user=user.pk).all()
@@ -42,58 +32,33 @@ class PublicDictionaries(generics.ListAPIView):
         dictionaries =  Dictionary.objects.filter(public=True).all()
         return dictionaries
     
-
-    
-class UploadDictionary(generics.CreateAPIView):
-    serializer_class = DictionarySerializer
-    
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (AllowAny,)
-    def create(self, request, *args, **kwargs):
-        user = Token.objects.filter(*args, **kwargs)
-        if user.exists():
-            user = user.last().user
-            user = User.objects.get(username=user)
-
-        Dictionary.objects.create()
-    
-
 class DetailDictionary(generics.RetrieveAPIView):
     queryset = Dictionary.objects.all()
-    [SessionAuthentication, TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = DictionarySerializer
-    
-    # def get_serializer_context(self):
-    #     context = super().get_serializer_context()
-    #     context["customer_id"] = self.kwargs['customer_id']
-    #     context["query_params"] = self.request.query_params
-    #     return context
-    
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class=UserSerializer
-    
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class=UserSerializer
-    
-
-# Class based view to Get User Details using Token Authentication
-class UserDetailAPI(APIView):
-  authentication_classes = [SessionAuthentication, TokenAuthentication]
-  permission_classes = (AllowAny,)
-  def get(self,request,*args,**kwargs):
-    user = Token.objects.filter(*args, **kwargs)
-    if user.exists():
-        user = user.last().user
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
 
 # https://www.codersarts.com/post/how-to-create-register-and-login-api-using-django-rest-framework-and-token-authentication
 #Class based view to register user
 class RegisterUserAPIView(generics.CreateAPIView):
   permission_classes = (AllowAny,)
   serializer_class = RegisterSerializer
+
+# class UploadDictionary(generics.CreateAPIView):
+class UploadDictionary(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+    def create(self, request):
+        file_uploaded = request.FILES.get('file')
+        print(file_uploaded)
+        data = request.data
+        data = {k: v for k, v in data.items()}
+        token = self.request.headers['Authorization'].split("Bearer ")[1]
+        tokenObj = models.AccessToken.objects.get(token=token)
+        user = User.objects.get(username=tokenObj.user)
+        newDict = Dictionary.objects.create(title=data["title"],description=data["description"], file = file_uploaded, user = user, public = data["public"]==True)
+        newDict.save()
+        response = "success!"
+        return Response(response)
 
 # Create the API views
 class UserList(generics.ListCreateAPIView):

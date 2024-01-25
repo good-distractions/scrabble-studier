@@ -3,8 +3,7 @@ from flashcard_app import models
 from django.contrib.auth.models import User, Group
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.response import Response
-from rest_framework import status
+
 
 class DictionarySerializer(serializers.ModelSerializer):
   class Meta:
@@ -21,17 +20,7 @@ class DictionarySerializer(serializers.ModelSerializer):
           'words_q4',
           'preview',
       ]
-      model = models.Dictionary   
-  def create(self, validated_data):
-    dictionary = models.Dictionary.objects.create(
-      title=validated_data['title'],
-      description=validated_data['description'],
-      public= validated_data['public'],
-      
-      file=validated_data['file']
-    )
-    dictionary.save()
-    return dictionary    
+      model = models.Dictionary     
         
 class UserSerializer(serializers.ModelSerializer):
     dictionaries = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Dictionary.objects.all())
@@ -56,7 +45,6 @@ class RegisterSerializer(serializers.ModelSerializer):
   )
   password = serializers.CharField(
     write_only=True, required=True, validators=[validate_password])
-#   password2 = serializers.CharField(write_only=True, required=True)
   class Meta:
     model = User
     fields = ('username', 'password', 
