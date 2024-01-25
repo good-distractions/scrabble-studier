@@ -13,8 +13,7 @@ class Dictionary(models.Model):
     title = models.CharField(max_length=60)
     source = models.URLField( max_length=400,blank=True,null=True)
     description = models.CharField( max_length=1000,blank=True,null=True)
-    # file = models.FileField(blank=False, null=False,validators=[FileExtensionValidator(allowed_extensions=["csv"])])
-    file = models.FileField(blank=True, null=True,validators=[FileExtensionValidator(allowed_extensions=["csv"])])
+    file = models.FileField(blank=False, null=False,validators=[FileExtensionValidator(allowed_extensions=["csv"])])
     user = models.ForeignKey(User, related_name = 'dictionaries', on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
     

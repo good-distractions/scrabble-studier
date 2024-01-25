@@ -34,7 +34,7 @@ class PublicDictionaries(generics.ListAPIView):
     
 class DetailDictionary(generics.RetrieveAPIView):
     queryset = Dictionary.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = DictionarySerializer
 
 # https://www.codersarts.com/post/how-to-create-register-and-login-api-using-django-rest-framework-and-token-authentication
