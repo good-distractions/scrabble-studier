@@ -14,6 +14,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+# https://stackoverflow.com/questions/75001305/how-to-connect-expo-go-app-to-django-rest-framework-backend-on-localhost
 @method_decorator(csrf_exempt, name='dispatch')
 class UserDictionaries(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]

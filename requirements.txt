@@ -13,6 +13,7 @@ boto3
 django_user_agents
 pandas
 django-cors-headers
+oauth2_provider
 django_filter
 psycopg; sys_platform == "linux"
 psycopg[binary]; sys_platform != "linux"
