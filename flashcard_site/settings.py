@@ -167,11 +167,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -189,10 +186,7 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 STATICFILES_STORAGE = os.getenv('STATICFILES_STORAGE')
 
 STATIC_URL = os.getenv('STATIC_URL')
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    # "/var/www/static/",
-]
+STATICFILES_DIRS = [BASE_DIR / "static",]
 MEDIA_URL = AWS_URL + '/media/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
@@ -204,10 +198,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://stackoverflow.com/questions/67327660/cors-not-working-in-django-but-settings-seem-correct
 
 CORS_ALLOW_CREDENTIALS = True
-
 CORS_ALLOW_HEADERS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = os.getenv('ORIGINS')
-CSRF_TRUSTED_ORIGINS = os.getenv('ORIGINS')
-CORS_ALLOWED_ORIGINS = os.getenv('ORIGINS')
-CSRF_TRUSTED_ORIGINS = os.getenv('ORIGINS')
+CORS_ALLOWED_ORIGINS = os.getenv('ORIGINS').split(' ')
+CSRF_TRUSTED_ORIGINS = os.getenv('ORIGINS').split(' ')

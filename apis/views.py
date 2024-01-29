@@ -11,8 +11,10 @@ from .serializers import UserSerializer,RegisterSerializer, GroupSerializer, Dic
 from rest_framework import generics
 from rest_framework.permissions import  AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
-    
+@method_decorator(csrf_exempt, name='dispatch')
 class UserDictionaries(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     serializer_class = DictionarySerializer    
@@ -23,7 +25,8 @@ class UserDictionaries(generics.ListAPIView):
         user = User.objects.get(username=tokenObj.user)
         dictionaries =  Dictionary.objects.filter(user=user.pk).all()
         return dictionaries
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
 class PublicDictionaries(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = DictionarySerializer    
@@ -31,19 +34,23 @@ class PublicDictionaries(generics.ListAPIView):
     def get_queryset(self,*args,**kwargs):
         dictionaries =  Dictionary.objects.filter(public=True).all()
         return dictionaries
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
 class DetailDictionary(generics.RetrieveAPIView):
     queryset = Dictionary.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = DictionarySerializer
 
+
 # https://www.codersarts.com/post/how-to-create-register-and-login-api-using-django-rest-framework-and-token-authentication
 #Class based view to register user
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterUserAPIView(generics.CreateAPIView):
   permission_classes = (AllowAny,)
   serializer_class = RegisterSerializer
 
 # class UploadDictionary(generics.CreateAPIView):
+@method_decorator(csrf_exempt, name='dispatch')
 class UploadDictionary(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
