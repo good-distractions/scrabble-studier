@@ -12,13 +12,13 @@ class DictionarySerializer(serializers.ModelSerializer):
           'title',
           'description',
           'file',
-          'user',
           'public',
           'words_q1',
           'words_q2',
           'words_q3',
           'words_q4',
           'preview',
+          'user_username'
       ]
       model = models.Dictionary     
         

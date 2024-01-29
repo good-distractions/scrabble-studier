@@ -14,6 +14,10 @@ class Dictionary(models.Model):
     source = models.URLField( max_length=400,blank=True,null=True)
     description = models.CharField( max_length=1000,blank=True,null=True)
     file = models.FileField(blank=False, null=False,validators=[FileExtensionValidator(allowed_extensions=["csv"])])
+<<<<<<< Updated upstream
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    public = models.BooleanField(default=False)
+=======
     user = models.ForeignKey(User, related_name = 'dictionaries', on_delete=models.CASCADE)
     public = models.BooleanField(default=False)
     
@@ -49,6 +53,11 @@ class Dictionary(models.Model):
         data = data.values.tolist()
         data = json.dumps(data)
         return (data)
+    
+    @property
+    def user_username(self):
+        self.user.username
+        return (self.user.username)
     
     @property
     def words_q3(self):
@@ -159,3 +168,4 @@ class Dictionary(models.Model):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+>>>>>>> Stashed changes
