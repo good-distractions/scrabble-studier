@@ -207,38 +207,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOWED_ORIGINS = ['https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 
-                        'https://scrabble-studier-ccda039bdec1.herokuapp.com',
-                        'https://wordywhiz.com',
-                        'http://192.168.0.34:8081',
-                        'http://localhost:8081',
-                        'http://192.168.0.34:8000',
-                        'http://192.168.0.68:8000',]
-CSRF_TRUSTED_ORIGINS = [
-   'https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 
-                        'https://scrabble-studier-ccda039bdec1.herokuapp.com',
-                        'https://wordywhiz.com',
-                        'http://192.168.0.34:8081',
-                        'http://localhost:8081',
-                        'http://192.168.0.34:8000',
-                        'http://192.168.0.68:8000',
-]
-CORS_ALLOWED_ORIGINS = [
-   'https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 
-                        'https://scrabble-studier-ccda039bdec1.herokuapp.com',
-                        'https://wordywhiz.com',
-                        'http://192.168.0.34:8081',
-                        'http://localhost:8081',
-                        'http://192.168.0.34:8000',
-                        'http://192.168.0.68:8000',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-   'https://www.scrabble-studier-ccda039bdec1.herokuapp.com', 
-                        'https://scrabble-studier-ccda039bdec1.herokuapp.com',
-                        'https://wordywhiz.com',
-                        'http://192.168.0.34:8081',
-                        'http://localhost:8081',
-                        'http://192.168.0.34:8000',
-                        'http://192.168.0.68:8000',
-]
+CORS_ALLOWED_ORIGINS = os.getenv('ORIGINS')
+CSRF_TRUSTED_ORIGINS = os.getenv('ORIGINS')
+CORS_ALLOWED_ORIGINS = os.getenv('ORIGINS')
+CSRF_TRUSTED_ORIGINS = os.getenv('ORIGINS')
