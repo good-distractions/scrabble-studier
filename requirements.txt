@@ -15,5 +15,6 @@ pandas
 django-cors-headers
 oauth2_provider
 django_filter
+django-oauth-toolkit
 psycopg; sys_platform == "linux"
 psycopg[binary]; sys_platform != "linux"
