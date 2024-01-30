@@ -63,7 +63,7 @@ class UploadDictionary(generics.CreateAPIView):
         token = self.request.headers['Authorization'].split("Bearer ")[1]
         tokenObj = models.AccessToken.objects.get(token=token)
         user = User.objects.get(username=tokenObj.user)
-        newDict = Dictionary.objects.create(title=data["title"],description=data["description"], file = file_uploaded, user = user, public = data["public"]==True)
+        newDict = Dictionary.objects.create(title=data["title"],description=data["description"], file = file_uploaded, user = user, public = data["public"]=="true")
         newDict.save()
         response = "success!"
         return Response(response)
