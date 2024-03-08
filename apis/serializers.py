@@ -21,6 +21,20 @@ class DictionarySerializer(serializers.ModelSerializer):
           'user_username'
       ]
       model = models.Dictionary     
+      
+class DictionaryFullSerializer(serializers.ModelSerializer):
+  class Meta:
+      fields = [
+          'id',
+          'title',
+          'description',
+          'file',
+          'public',
+          'words_full',
+          'preview',
+          'user_username'
+      ]
+      model = models.Dictionary     
         
 class UserSerializer(serializers.ModelSerializer):
     dictionaries = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Dictionary.objects.all())

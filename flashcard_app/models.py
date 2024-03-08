@@ -29,11 +29,20 @@ class Dictionary(models.Model):
         return (data)
     
     @property
+    def words_full(self):
+        # read & prep
+        data = pd.read_csv(self.file.url, header=None, usecols=[0])
+        data = data.dropna()
+        data = data.values.tolist()
+        print(data)
+        data = json.dumps(data)
+        return (data)
+    
+    @property
     def words_q1(self):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
-        # data = data.loc[0:1]
         data = data.loc[0: int(round(data.shape[0]/4))]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -44,23 +53,18 @@ class Dictionary(models.Model):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
-        # data = data.loc[2:3]
         data = data.loc[int(round(data.shape[0]/4)+1): int(round(data.shape[0]/4)*2) ]
         data = data.values.tolist()
         data = json.dumps(data)
         return (data)
     
-    @property
-    def user_username(self):
-        self.user.username
-        return (self.user.username)
+
     
     @property
     def words_q3(self):
         # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
-        # data = data.loc[4:5]
         data = data.loc[int(round(data.shape[0]/4)*2+1): int(round(data.shape[0]/4)*3) ]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -71,7 +75,6 @@ class Dictionary(models.Model):
     # read & prep
         data = pd.read_csv(self.file.url, header=None, usecols=[0])
         data = data.dropna()
-        # data = data.loc[6:7]
         data = data.loc[int(round(data.shape[0]/4)*3+1): int(round(data.shape[0])) ]
         data = data.values.tolist()
         data = json.dumps(data)
@@ -159,7 +162,11 @@ class Dictionary(models.Model):
     
     def __str__(self):
         return self.title
-    
+
+    @property
+    def user_username(self):
+        self.user.username
+        return (self.user.username)
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:

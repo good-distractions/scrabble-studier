@@ -8,7 +8,7 @@ from .serializers import DictionarySerializer
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .serializers import UserSerializer,RegisterSerializer, GroupSerializer, DictionarySerializer
+from .serializers import UserSerializer,RegisterSerializer, GroupSerializer, DictionarySerializer,DictionaryFullSerializer
 from rest_framework import generics
 from rest_framework.permissions import  AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -67,6 +67,13 @@ class DetailDictionary(generics.RetrieveAPIView):
     queryset = Dictionary.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = DictionarySerializer
+    
+@method_decorator(csrf_exempt, name='dispatch')
+class DetailDictionaryFull(generics.RetrieveAPIView):
+    queryset = Dictionary.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = DictionaryFullSerializer
+    
 
 # https://www.codersarts.com/post/how-to-create-register-and-login-api-using-django-rest-framework-and-token-authentication
 #Class based view to register user
