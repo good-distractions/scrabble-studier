@@ -23,7 +23,6 @@ body {
   min-height: 100vh;
   font-family: "Interstate";
   font-weight: light;
-  /* background-color: #5c2e2223; */
   background-color: #ffdc9f61 !important;
   color: #5c2e22 !important;
 }
@@ -40,7 +39,6 @@ body {
   margin-right: 10px;
   padding: 5px 0;
   text-align: center;
-  /* background-image: repeating-linear-gradient(90deg, white, white 13.5px, black 30px); */
 }
 
 .navbar {
