@@ -73,7 +73,6 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -179,10 +178,12 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_STORAGE = os.getenv('STATICFILES_STORAGE')
-
+# STATICFILES_STORAGE = os.getenv('storages.backends.s3boto3.S3Boto3Storage')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
-STATIC_URL = os.getenv('STATIC_URL')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = AWS_URL + '/media/'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
